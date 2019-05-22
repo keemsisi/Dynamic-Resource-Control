@@ -1,0 +1,25 @@
+version: "2"
+services:
+    dbserver:
+        image: mariadb:latest
+        ports: 
+            - "3307:3306"
+        environment:
+            MYSQL_DATABASE: wordpressdb
+            MYSQL_USER: cloudserver
+            MYSQL_PASSWORD: cloudserver
+            MYSQL_ROOT_PASSWORD: cloudserver
+        networks:
+            - default
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links: 
+            - dbserver:db
+        ports:
+            - 8000:80
+        environment:
+            MYSQL_DB_HOST: db:3307
+            MYSQL_USER: cloudserver
+            MYSQL_PASSWORD: cloudserver
+            MYSQL_ROOT_PASSWORD: cloudserver
+
